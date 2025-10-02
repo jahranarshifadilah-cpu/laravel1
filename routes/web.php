@@ -1,0 +1,154 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Mycontroller; // controller harus di import / di panggil dulu
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// basic
+Route::get('about', function(){
+    return '<h1> Hallo </h1>'.
+    '<br> selamat datang di perputakaan digital';
+});
+
+// basic
+Route::get('perkenalan', function () {
+    return '<h1> Hallo </h1>' .
+        '<br> perkenalkan nama saya jahran saya sekolah di smk assalam' .
+        '<br> saya kelas xirpl3 hobi saya mancing';
+});
+
+Route::get('buku', function () {
+    return view('buku');
+
+});
+
+
+Route::get('menu', function () {
+    $data = [
+        ['nama_makanan'=>'bala-bala','harga'=>1000,'jumlah'=>10],
+        ['nama_makanan'=>'gehu pedas','harga'=>2000,'jumlah'=> 15],
+        ['nama_makanan'=>'cireng isi tikus','harga'=>2500,'jumlah'=> 5],
+];
+$resto = "Resto MPL - Makanan Penuh Lemak";
+// compact fungsinya untuk mengirim collection data (array)
+// yang ada di variabel ke dalam sebuah view
+return view('menu',compact('data','resto'));
+
+});
+
+// route parameter (nilai)
+Route::get('books/{judul}',function($a){
+          return 'judul buku : '.$a;
+
+});
+
+Route::get('post/{title}/{category}', function ($a,$b ) {
+    // compact assosiatif
+    return view('post',['judul' =>$a, 'cat' =>$b]);
+
+});
+
+// Route optional parameter
+//ditandai dengan tanda tanya ?
+Route::get('profile/{nama?}',function($a = "guest"){ 
+   return 'halo nama saya ' .$a;
+});
+
+Route::get('order/{item?}', function($a = "Nasi"){
+    return view('order',compact('a'));
+});
+
+
+// soal dari pa candra
+// no 1
+Route::get('/no1', function () {
+    $barang = [
+        ['nama' => 'Buku', 'harga' => 15000, 'qty' => 2],
+        ['nama' => 'Pensil', 'harga' => 3000, 'qty' => 5],
+        ['nama' => 'Penggaris', 'harga' => 7000, 'qty' => 1],
+    ];
+
+    return view('no1', compact('barang'));
+});
+
+
+// no 2
+Route::get('/no2/{nama}/{mapel}/{nilai}', function ($nama, $mapel, $nilai) {
+    return view('no2', compact('nama', 'mapel', 'nilai'));
+});
+
+// no 3
+Route::get('/no3/{nama?}/{nilai?}', function ($nama = 'Guest', $nilai = 0) {
+    return view('no3', compact('nama', 'nilai'));
+});
+
+// no 4
+Route::get('/no4', function () {
+    $siswa = [
+        ['nama' => 'Andi', 'nilai' => 85],
+        ['nama' => 'Budi', 'nilai' => 70],
+        ['nama' => 'Citra', 'nilai' => 95],
+    ];
+
+    return view('no4', compact('siswa'));  
+});
+
+// test model 
+Route::get('test-model',function(){
+    // menampilkan semua data dari model post
+    $data = App\Models\Post::all();
+    return $data;
+});
+
+Route::get('create-data',function(){
+    // membuat data baru melalui model 
+    $data = App\Models\Post::create([
+        'title' =>'laravel pusing',
+        'content' =>'lorem ipsum'
+    ]);
+    return $data;
+});
+
+Route::get('show-data/{id}',function($id){
+  // menampilkan data berdasarkan parameter id
+  $data = App\Models\Post::find($id);
+  return $data;
+});
+
+Route::get('edit-data/{id}', function($id){
+     // mengeupdate data berdasarkan id
+     $data     =App\Models\Post::find($id);
+     $data->title= "membangun project dengan laravel";
+     $data->content = "Lorem Ipsum";
+     $data->save();
+     return $data;
+});
+
+Route::get('delete-data/{id}', function($id){
+    // menghapus data berdasarkan parameter id
+    $data = App\Models\Post::find($id);
+    $data->delete();
+    // di kembalikan ke halaman test model
+    return redirect('test-model');
+});
+
+Route::get('search/{cari}', function ($query){
+    // mencari data berdasarkan title yang mirip seperti (like) ......
+    $data = App\Models\Post::where('title','like', '%' . $query . '%')->get();
+    return $data;
+});
+
+// pemanggilan url mengunakan controller
+Route::get('greetings',[Mycontroller::class,'hello']);
+Route::get('student',[Mycontroller::class,'siswa']);
+
+use App\Http\Controllers\Postcontroller;
+// post 
+Route::get('post', [Postcontroller::class, 'index']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
