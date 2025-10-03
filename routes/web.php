@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mycontroller; // controller harus di import / di panggil dulu
 
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,7 +25,6 @@ Route::get('buku', function () {
 
 });
 
-
 Route::get('menu', function () {
     $data = [
         ['nama_makanan'=>'bala-bala','harga'=>1000,'jumlah'=>10],
@@ -46,11 +44,11 @@ Route::get('books/{judul}',function($a){
 
 });
 
-Route::get('post/{title}/{category}', function ($a,$b ) {
-    // compact assosiatif
-    return view('post',['judul' =>$a, 'cat' =>$b]);
+// Route::get('post/{title}/{category}', function ($a,$b ) {
+//     // compact assosiatif
+//     return view('post',['judul' =>$a, 'cat' =>$b]);
 
-});
+// });
 
 // Route optional parameter
 //ditandai dengan tanda tanya ?
@@ -61,7 +59,6 @@ Route::get('profile/{nama?}',function($a = "guest"){
 Route::get('order/{item?}', function($a = "Nasi"){
     return view('order',compact('a'));
 });
-
 
 // soal dari pa candra
 // no 1
@@ -147,8 +144,20 @@ Route::get('greetings',[Mycontroller::class,'hello']);
 Route::get('student',[Mycontroller::class,'siswa']);
 
 use App\Http\Controllers\Postcontroller;
-// post 
-Route::get('post', [Postcontroller::class, 'index']);
-Auth::routes();
 
+Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// post
+Route::get('post', [PostController::class, 'index'])->name('post.index');
+
+// tambah data post
+Route::get('post/create', [PostController::class, 'create'])->name('post.create');
+Route::post('post',[PostController::class, 'store'])->name('post.store');
+
+// edit data post
+Route::get('post/{id}/edit',[PostController::class, 'edit'])->name('post.edit');
+Route::put('post/{id}',[PostController::class, 'update'])->name('post.update');
+
+// hapus data
+Route::delete('post/{id}',[PostController::class, 'destroy'])->name('post.delete');
