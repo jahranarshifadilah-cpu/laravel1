@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mycontroller; // controller harus di import / di panggil dulu
+use App\Http\Controllers\RelasiController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -171,8 +173,13 @@ use App\Http\Controllers\BiodataController;
 Route::resource('biodata', BiodataController::class);
 
 
-
-
-
 // hapus data
-Route::delete('post/{id}',[PostController::class, 'destroy'])->name('post.delete');
+Route::delete('post/{id}', [PostController::class, 'destroy'])->name('post.delete');
+
+
+// relasi
+
+Route::get('/one-to-one', [RelasiController::class, 'oneToOne']);
+Route::get('/one-to-many', [RelasiController::class, 'oneToMany']);
+Route::get('/many-to-many', [RelasiController::class, 'manyToMany']);
+Route::get('eloquent', [RelasiController::class, 'eloquent']);
