@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mycontroller; // controller harus di import / di panggil dulu
 use App\Http\Controllers\RelasiController;
+use App\Http\Controllers\DosenController;
+
 
 
 Route::get('/', function () {
@@ -183,3 +185,11 @@ Route::get('/one-to-one', [RelasiController::class, 'oneToOne']);
 Route::get('/one-to-many', [RelasiController::class, 'oneToMany']);
 Route::get('/many-to-many', [RelasiController::class, 'manyToMany']);
 Route::get('eloquent', [RelasiController::class, 'eloquent']);
+
+// dosen2
+Route::resource('dosen', DosenController::class);
+
+
+use App\Http\Controllers\HobiController;
+
+Route::resource('hobi', HobiController::class);
