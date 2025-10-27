@@ -193,3 +193,9 @@ Route::resource('dosen', DosenController::class);
 use App\Http\Controllers\HobiController;
 
 Route::resource('hobi', HobiController::class);
+
+
+// CRUD One To Many
+Route::resource('mahasiswa', App\Http\Controllers\Mahasiswacontroller::class);
+Route::resource('wali', App\Http\Controllers\WaliController::class);
+
