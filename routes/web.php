@@ -199,3 +199,16 @@ Route::resource('hobi', HobiController::class);
 Route::resource('mahasiswa', App\Http\Controllers\Mahasiswacontroller::class);
 Route::resource('wali', App\Http\Controllers\WaliController::class);
 
+// CRUD pelanggan
+use App\Http\Controllers\PelangganController;
+
+Route::resource('pelanggan', PelangganController::class);
+
+use App\Http\Controllers\Produk1Controller;
+
+Route::resource('produk1', Produk1Controller::class);
+
+use App\Http\Controllers\TransaksiController;
+Route::resource('transaksi', TransaksiController::class);
+
+
