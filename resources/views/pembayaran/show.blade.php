@@ -65,7 +65,7 @@
                     @foreach($pembayaran->transaksi->produks as $index => $produk)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $produk->nama }}</td>
+                        <td>{{ $produk->nama_produk }}</td>
                         <td>Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
                         <td>{{ $produk->pivot->jumlah }}</td>
                         <td>Rp {{ number_format($produk->pivot->sub_total, 0, ',', '.') }}</td>
