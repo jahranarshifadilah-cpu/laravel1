@@ -100,7 +100,7 @@
                 <div class="card-header">Detail Pelanggan</div>
                 <div class="card-body">
                     <p><strong>Nama:</strong> {{ $pelanggan->nama }}</p>
-                    <p><strong>No Telp:</strong> {{ $pelanggan->no_telp }}</p>
+                    <p><strong>No Telp:</strong> {{ $pelanggan->no_telepon }}</p>
                     <p><strong>Alamat:</strong> {{ $pelanggan->alamat }}</p>
 
                     <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Kembali</a>

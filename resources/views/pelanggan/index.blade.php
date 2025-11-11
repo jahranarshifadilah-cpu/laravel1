@@ -159,54 +159,65 @@
 </style>
 
 
+@extends('layouts.app')
+
+@section('content')
 <div class="container">
-    <div class="row">
-        <div class="col">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">💁🏻‍♂️Data Pelanggan</div>
+                <div class="card-header">
+                    <div class="float-start">
+                        Pelanggan
+                    </div>
+                    <div class="float-end">
+                        <a href="{{ route('pelanggan.create') }}" class="btn btn-sm btn-outline-primary">Tambah Data</a>
+                    </div>
+                </div>
 
                 <div class="card-body">
-                    <a href="{{ route('pelanggan.create') }}" class="btn btn-success mb-3">👥 Tambah Pelanggan</a>
-
-
-                    @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>No Telp</th>
-                                <th>Alamat</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($pelanggans as $p)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $p->nama }}</td>
-                                <td>{{ $p->no_telp }}</td>
-                                <td>{{ $p->alamat }}</td>
-                                <td>
-                                    <a href="{{ route('pelanggan.show', $p->id) }}" class="btn btn-primary btn-sm">👀</a> |
-
-
-                                    <a href="{{ route('pelanggan.edit', $p->id) }}" class="btn btn-info btn-sm">✍️</a> |
-
-                                    <form action="{{ route('pelanggan.destroy', $p->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')" class="btn btn-danger btn-sm">🗑</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Alamat</th>
+                                    <th>No Telepon</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $no = 1; @endphp
+                                @forelse ($pelanggan as $data)
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $data->nama }}</td>
+                                    <td>{{ $data->alamat }}</td>
+                                    <td>{{ $data->no_telepon }}</td>
+                                    <td>
+                                        <form action="{{ route('pelanggan.destroy', $data->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{ route('pelanggan.show', $data->id) }}"
+                                                class="btn btn-sm btn-outline-dark">Show</a> |
+                                            <a href="{{ route('pelanggan.edit', $data->id) }}"
+                                                class="btn btn-sm btn-outline-success">Edit</a> |
+                                            <button type="submit" onsubmit="return confirm('Are You Sure ?');"
+                                                class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        Data data belum Tersedia.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

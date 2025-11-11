@@ -200,15 +200,13 @@ Route::resource('mahasiswa', App\Http\Controllers\Mahasiswacontroller::class);
 Route::resource('wali', App\Http\Controllers\WaliController::class);
 
 // CRUD pelanggan
-use App\Http\Controllers\PelangganController;
 
-Route::resource('pelanggan', PelangganController::class);
+    Route::get('transaksi/search', [ App\Http\Controllers\TransaksiController::class, 'search'])->name('transaksi.search');
+    Route::resource('pelanggan', App\Http\Controllers\PelangganController::class);
+    Route::resource('produk', App\Http\Controllers\ProdukController::class);
+    Route::resource('transaksi', App\Http\Controllers\TransaksiController::class);
+    Route::resource('pembayaran', App\Http\Controllers\PembayaranController::class);
 
-use App\Http\Controllers\Produk1Controller;
 
-Route::resource('produk1', Produk1Controller::class);
-
-use App\Http\Controllers\TransaksiController;
-Route::resource('transaksi', TransaksiController::class);
 
 
